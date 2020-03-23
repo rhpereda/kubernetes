@@ -13,3 +13,4 @@ Before start is imperative install all the required dependencies for running kub
 
 ## Content
 - [01-hello-minikube](./01-hello-minikube): Run a simple Node.js app on Kubernetes using Minikube.
+- [02-kubernets-basics](./02-kubernetes-basics): Basics of the Kubernetes cluster orchestration system.

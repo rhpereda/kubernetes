@@ -1,5 +1,5 @@
 start-minikube:
-	minikube start
+	minikube start --vm-driver=hyperkit --container-runtime=docker --memory 8192
 
 status:
 	minikube status
