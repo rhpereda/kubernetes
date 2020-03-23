@@ -9,6 +9,7 @@ Before start is imperative install all the required dependencies for running kub
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-kubectl)
 - [a hypervisor](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-a-hypervisor)
 - [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube)
+- [make](https://www.gnu.org/software/make/)
 
 ## Content
-1. [01-hello-minikube](./01-hello-minikube)
+- [01-hello-minikube](./01-hello-minikube): Run a simple Node.js app on Kubernetes using Minikube.

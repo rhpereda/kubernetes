@@ -1,6 +1,3 @@
-dashboard:
-	minikube dashboard
-
 create-deployment:
 	kubectl create deployment hello-node --image=gcr.io/hello-minikube-zero-install/hello-node
 
