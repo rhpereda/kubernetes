@@ -2,7 +2,7 @@ start-minikube:
 	minikube start
 
 status:
-	 minikube status
+	minikube status
 
 stop-minikube:
 	minikube stop
@@ -12,3 +12,12 @@ delete-minikube:
 
 dashboard:
 	minikube dashboard
+
+nodes:
+	kubectl get nodes
+
+info:
+	kubectl cluster-info
+
+version:
+	kubectl version
