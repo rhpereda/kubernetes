@@ -3,11 +3,11 @@ APP_NAME=kubernetes-bootcamp
 create-deployment:
 	kubectl create deployment $(APP_NAME) --image=gcr.io/google-samples/kubernetes-bootcamp:v1
 
+get-deployment:
+	kubectl get deployments
+
 delete-deployment:
 	kubectl delete deployment $(APP_NAME)
-
-deployments:
-	kubectl get deployments
 
 proxy:
 	kubectl proxy
@@ -35,3 +35,37 @@ execute:
 
 container-session:
 	kubectl exec -ti $(shell make pod-name) bash
+
+# Module 4
+run-deployment:
+	kubectl run $(APP_NAME) --image=gcr.io/google-samples/kubernetes-bootcamp:v1 --port=8080
+
+get-services:
+	kubectl get services
+
+expose:
+	kubectl expose deployment/$(APP_NAME) --type="NodePort" --port 8080
+
+describe-service:
+	kubectl describe services/$(APP_NAME)
+
+app-port:
+	$(shell kubectl get services/kubernetes-bootcamp -o go-template='{{(index .spec.ports 0).nodePort}}')
+
+test-app:
+	-curl "http://$(shell minikube ip):$(shell make app-port)"
+
+describe-deployment:
+	kubectl describe deployment
+
+get-pods-by-label:
+	kubectl get pods -l $(label)
+
+get-services-by-label:
+	kubectl get services -l $(label)
+
+apply-label:
+	kubectl label pod $(shell make pod-name) $(label)
+
+delete-service-by-label:
+	kubectl delete service -l $(label)

@@ -3,8 +3,10 @@ Application to learn all the basics kubernetes concepts and commands follow this
 
 ## Commands
 - create-deployment: Creates deployment object for kubernetes-bootcamp application
-- deployments: Get the deployment unit created
-- proxy: Creates proxy for access the deployed application 
+- get-deployment: Get the deployment unit created
+- delete-deployment: Delete the deployment for kubernetes-bootcamp application 
+- proxy: Creates proxy for access the deployed application
+- get-pods: Gets the pods
 - pod-name: Gets the pod name
 - pod-apis: Gets the apis associated with the deployed pod
 - describe-pods: Describe all the pods characteristics
@@ -12,3 +14,14 @@ Application to learn all the basics kubernetes concepts and commands follow this
 - logs: View the container logs
 - execute: Execute commands inside the container. For instance: `make execute command=env`
 - container-session: Opens and interactive session in the container
+- run-deployment: Running deployment instead of creating. This allow to specify the port such as other things
+- get-services: Get all the cluster services
+- expose: Creates a service to expose the application
+- describe-service: Get all services specifications
+- app-port: Get the exposed port for kubernetes-bootcamp application
+- test-app: Perform a curl to test the application by using the minikube ip and the exposed port
+- describe-deployment: Describes the deployment object
+- get-pods-by-label: Allows filter the pods by label. For instance `make get-pods-by-label label=app=v1`
+- get-services-by-label: Allows filter the pods by label. For instance `make get-services-by-label label=app=v1`
+- apply-label: Add a label to running pod. For instance `make apply-label label=app=v1`
+- delete-service-by-label: Deletes services filtered by label. For instance `make delete-service-by-label label=run=kubernetes-bootcamp`
