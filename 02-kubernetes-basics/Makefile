@@ -13,7 +13,7 @@ proxy:
 	kubectl proxy
 
 get-pods:
-	kubectl get pods
+	kubectl get pods -o wide
 
 pod-name:
 	$(shell kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
@@ -69,3 +69,10 @@ apply-label:
 
 delete-service-by-label:
 	kubectl delete service -l $(label)
+
+# Module 5
+get-replicas:
+	kubectl get rs
+
+scale:
+	kubectl scale deployments/kubernetes-bootcamp --replicas=$(desired)

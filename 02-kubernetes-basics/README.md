@@ -25,3 +25,5 @@ Application to learn all the basics kubernetes concepts and commands follow this
 - get-services-by-label: Allows filter the pods by label. For instance `make get-services-by-label label=app=v1`
 - apply-label: Add a label to running pod. For instance `make apply-label label=app=v1`
 - delete-service-by-label: Deletes services filtered by label. For instance `make delete-service-by-label label=run=kubernetes-bootcamp`
+- get-replicas: Gets the numbers of replicas
+- scale: Increase o decrease the number of replicas that the application has. For intance: `make scale desired=2`
