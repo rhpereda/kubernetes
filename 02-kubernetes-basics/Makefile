@@ -76,3 +76,13 @@ get-replicas:
 
 scale:
 	kubectl scale deployments/kubernetes-bootcamp --replicas=$(desired)
+
+# Module 6
+update-image:
+	kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:$(version)
+
+confirm-update:
+	kubectl rollout status deployments/kubernetes-bootcamp
+
+rollback:
+	kubectl rollout undo deployments/kubernetes-bootcamp

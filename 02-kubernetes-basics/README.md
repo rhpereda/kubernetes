@@ -27,3 +27,6 @@ Application to learn all the basics kubernetes concepts and commands follow this
 - delete-service-by-label: Deletes services filtered by label. For instance `make delete-service-by-label label=run=kubernetes-bootcamp`
 - get-replicas: Gets the numbers of replicas
 - scale: Increase o decrease the number of replicas that the application has. For intance: `make scale desired=2`
+- update-image: Update the application version by deploying a new image for the application
+- confirm-update: Get the update application status
+- rollback: Rollback a deployment to the previous state
