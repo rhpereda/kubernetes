@@ -72,10 +72,10 @@ container-session:
 # ---------------------------------------------------------------------
 # APPLICATIONS COMMANDS
 # ---------------------------------------------------------------------
-app-deploy: create-deployment create-service
+app-deploy: deployment-create service-create
 	minikube service $(APP_NAME)
 
-app-undeploy: delete-service delete-deployment
+app-undeploy: service-delete deployment-delete
 
 app-scale:
 	kubectl scale deployments/$(APP_NAME) --replicas=$(desired)

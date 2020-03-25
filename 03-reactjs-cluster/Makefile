@@ -7,7 +7,7 @@ IMAGE_TAG=reiniel/my-react-app:latest
 # DEPLOYMENT COMMANDS
 # ---------------------------------------------------------------------
 deployment-apply:
-	kubectl apply -f ./deploy/cluster.yml
+	kubectl apply -f ./deploy/deployment.yml
 	minikube service $(APP_NAME)
 
 # ---------------------------------------------------------------------
