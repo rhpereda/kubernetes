@@ -1,23 +1,81 @@
-start-minikube:
-	minikube start --vm-driver=hyperkit --container-runtime=docker --memory 8192
+include ../Makefile.cluster
 
-status:
-	minikube status
+APP_NAME=
+IMAGE_TAG=
 
-stop-minikube:
-	minikube stop
+# ---------------------------------------------------------------------
+# DEPLOYMENT COMMANDS
+# ---------------------------------------------------------------------
+deployment-create:
+	kubectl create deployment $(APP_NAME) --image=$(IMAGE_TAG)
 
-delete-minikube:
-	minikube delete
+deployment-delete:
+	kubectl delete deployment $(APP_NAME)
 
-dashboard:
-	minikube dashboard
+deployment-describe:
+	kubectl describe deployment $(APP_NAME)
 
-nodes:
-	kubectl get nodes
+deployment-get:
+	kubectl get deployments $(APP_NAME)
 
-info:
-	kubectl cluster-info
+# ---------------------------------------------------------------------
+# SERVICES COMMANDS
+# ---------------------------------------------------------------------
+service-create:
+	kubectl expose deployment $(APP_NAME) --type=LoadBalancer --port=8080
 
-version:
-	kubectl version
+service-delete:
+	kubectl delete service $(APP_NAME)
+
+service-describe:
+	kubectl describe services $(APP_NAME)
+
+service-get:
+	kubectl get services $(APP_NAME)
+
+service-get-by-label:
+	kubectl get services -l $(label)
+
+# ---------------------------------------------------------------------
+# PODS COMMANDS
+# ---------------------------------------------------------------------
+pods-describe:
+	kubectl describe pods $(APP_NAME)
+
+pods-get:
+	kubectl get pods -o wide $(APP_NAME)
+
+pods-get-by-label:
+	kubectl get pods -l $(label)
+
+pods-get-name:
+	$(shell kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
+
+# ---------------------------------------------------------------------
+# REPLICAS COMMANDS
+# ---------------------------------------------------------------------
+replicas-get:
+	kubectl get rs
+
+# ---------------------------------------------------------------------
+# UTILITIES COMMANDS
+# ---------------------------------------------------------------------
+get-logs:
+	kubectl logs $(shell make get-pod-name)
+
+execute:
+	kubectl exec $(shell make get-pod-name) $(command)
+
+container-session:
+	kubectl exec -ti $(shell make get-pod-name) bash
+
+# ---------------------------------------------------------------------
+# APPLICATIONS COMMANDS
+# ---------------------------------------------------------------------
+app-deploy: create-deployment create-service
+	minikube service $(APP_NAME)
+
+app-undeploy: delete-service delete-deployment
+
+app-scale:
+	kubectl scale deployments/$(APP_NAME) --replicas=$(desired)

@@ -1,88 +1,52 @@
+include ../Makefile
+
 APP_NAME=kubernetes-bootcamp
+IMAGE_TAG=gcr.io/google-samples/kubernetes-bootcamp:v1
 
-create-deployment:
-	kubectl create deployment $(APP_NAME) --image=gcr.io/google-samples/kubernetes-bootcamp:v1
+# ---------------------------------------------------------------------
+# DEPLOYMENT COMMANDS
+# ---------------------------------------------------------------------
+deployment-run:
+	kubectl run $(APP_NAME) --image=gcr.io/google-samples/kubernetes-bootcamp:v1 --port=8080
 
-get-deployment:
-	kubectl get deployments
+# ---------------------------------------------------------------------
+# SERVICES COMMANDS
+# ---------------------------------------------------------------------
+services-expose:
+	kubectl expose deployment/$(APP_NAME) --type="NodePort" --port 8080
 
-delete-deployment:
-	kubectl delete deployment $(APP_NAME)
+services-delete-by-label:
+	kubectl delete service -l $(label)
 
-proxy:
-	kubectl proxy
+# ---------------------------------------------------------------------
+# PODS COMMANDS
+# ---------------------------------------------------------------------
+pods-apply-label:
+	kubectl label pod $(shell make pod-name) $(label)
 
-get-pods:
-	kubectl get pods -o wide
-
-pod-name:
-	$(shell kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
-
-pod-apis:
+pods-get-apis:
 	-curl "http://localhost:8001/$(shell make pod-name)"
 
-describe-pods:
-	kubectl describe pods
+# ---------------------------------------------------------------------
+# APPLICATIONS COMMANDS
+# ---------------------------------------------------------------------
+app-proxy:
+	kubectl proxy
 
 app-output:
 	-curl "http://localhost:8001/api/v1/namespaces/default/pods/$(shell make pod-name)/proxy/"
 
-logs:
-	kubectl logs $(shell make pod-name)
-
-execute:
-	kubectl exec $(shell make pod-name) $(command)
-
-container-session:
-	kubectl exec -ti $(shell make pod-name) bash
-
-# Module 4
-run-deployment:
-	kubectl run $(APP_NAME) --image=gcr.io/google-samples/kubernetes-bootcamp:v1 --port=8080
-
-get-services:
-	kubectl get services
-
-expose:
-	kubectl expose deployment/$(APP_NAME) --type="NodePort" --port 8080
-
-describe-service:
-	kubectl describe services/$(APP_NAME)
-
 app-port:
 	$(shell kubectl get services/kubernetes-bootcamp -o go-template='{{(index .spec.ports 0).nodePort}}')
 
-test-app:
+app-test:
 	-curl "http://$(shell minikube ip):$(shell make app-port)"
 
-describe-deployment:
-	kubectl describe deployment
-
-get-pods-by-label:
-	kubectl get pods -l $(label)
-
-get-services-by-label:
-	kubectl get services -l $(label)
-
-apply-label:
-	kubectl label pod $(shell make pod-name) $(label)
-
-delete-service-by-label:
-	kubectl delete service -l $(label)
-
-# Module 5
-get-replicas:
-	kubectl get rs
-
-scale:
-	kubectl scale deployments/kubernetes-bootcamp --replicas=$(desired)
-
-# Module 6
-update-image:
+app-update-image:
 	kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:$(version)
 
-confirm-update:
-	kubectl rollout status deployments/kubernetes-bootcamp
+app-confirm-update:
+	kubectl rollout status deployments/$(APP_NAME)
 
-rollback:
-	kubectl rollout undo deployments/kubernetes-bootcamp
+app-update-rollback:
+	kubectl rollout undo deployments/$(APP_NAME)
