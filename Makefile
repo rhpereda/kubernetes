@@ -1,7 +1,32 @@
-include ../Makefile.cluster
-
 APP_NAME=
 IMAGE_TAG=
+
+# ---------------------------------------------------------------------
+# CLUSTER COMMANDS
+# ---------------------------------------------------------------------
+cluster-start:
+	minikube start --vm-driver=hyperkit --container-runtime=docker --memory 8192
+
+cluster-status:
+	minikube status
+
+cluster-stop:
+	minikube stop
+
+cluster-delete:
+	minikube delete
+
+cluster-dashboard:
+	minikube dashboard
+
+cluster-info:
+	kubectl cluster-info
+
+cluster-nodes:
+	kubectl get nodes
+
+cluster-version:
+	kubectl version
 
 # ---------------------------------------------------------------------
 # DEPLOYMENT COMMANDS
